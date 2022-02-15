@@ -1,0 +1,17 @@
+kind: ConfigMap
+metadata:
+  name: vitex-stats-server
+  namespace: vitex-k8s
+apiVersion: v1
+data:
+  # Change SECRET_KEY and adapt SQLALCHEMY_DATABASE_URI, URL_RPC according to the target cluster before deployment.
+  flask_config.py: |-
+    # config for vitex-stats-server
+
+    DEBUG = False
+    TESTING = False
+    SECRET_KEY = 'CHANGE_THIS_SECRET'
+    URL_RPC = 'http://govite-chain:48132'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://vitexweb:vitexweb@postgres/vitexweb'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    LOGLEVEL = 'WARNING'

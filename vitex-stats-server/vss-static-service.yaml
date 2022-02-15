@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vitex-stats-server-static
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: vitex-stats-server-static
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      name: frontend
+      targetPort: frontend
+  selector:
+    app.kubernetes.io/name: vitex-stats-server-static
+    app.kubernetes.io/part-of: vitex-k8s

@@ -1,0 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: govite-data-pv-claim
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: govite
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 350Gi

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vitex-stats-server
+  namespace: vitex-k8s
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: your.host.name
+      http:
+        paths:
+          - path: /api/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: vitex-stats-server
+                port:
+                  name: website-backend
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: vitex-stats-server-static
+                port:
+                  name: frontend

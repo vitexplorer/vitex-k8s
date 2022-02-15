@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-daily-stats
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: update-daily-stats
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  # at beginning of every hour
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: update-daily-stats
+              image: yourdockerrepo/vitex-stats-server:1.2
+              command: ["flask", "manage", "update-daily-statistics-today"]
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: FLASK_CONFIG
+                  value: /etc/vitex-stats-server/flask_config.py
+                - name: FLASK_ENV
+                  value: production
+              volumeMounts:
+                - mountPath: /etc/vitex-stats-server
+                  name: flask-config
+                  readOnly: true
+          volumes:
+            - name: flask-config
+              configMap:
+                name: vitex-stats-server
+
+          restartPolicy: OnFailure

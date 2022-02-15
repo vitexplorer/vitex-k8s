@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: govite
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: govite
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: govite
+      app.kubernetes.io/part-of: vitex-k8s
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: govite
+        app.kubernetes.io/part-of: vitex-k8s
+    spec:
+      containers:
+        - name: govite-chain
+          image: yourdockerrepo/govite:1.0
+          imagePullPolicy: "IfNotPresent"
+          args:
+            - --config=/etc/govite/node_config.json
+            - --datadir=/var/govite/data
+          ports:
+            - containerPort: 48132
+              name: http
+          volumeMounts:
+            - mountPath: /etc/govite
+              name: node-config
+              readOnly: true
+            - mountPath: /var/govite/data
+              name: govite-data
+      volumes:
+        - name: govite-data
+          persistentVolumeClaim:
+            claimName: govite-data-pv-claim
+        - name: node-config
+          configMap:
+            name: govite-node-config

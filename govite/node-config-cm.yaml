@@ -1,0 +1,52 @@
+kind: ConfigMap
+metadata:
+  name: govite-node-config
+  namespace: vitex-k8s
+apiVersion: v1
+data:
+  # Change Identify before deployment
+  node_config.json: |-
+    {
+      "Identity": "your.identity",
+      "NetID": 1,
+      "ListenInterface": "0.0.0.0",
+      "Port": 8483,
+      "FilePort": 8484,
+      "MaxPeers": 10,
+      "MinPeers": 5,
+      "MaxInboundRatio": 2,
+      "MaxPendingPeers": 5,
+      "BootSeeds": [
+        "https://bootnodes.vite.net/bootmainnet.json"
+      ],
+      "Discover": true,
+      "RPCEnabled": true,
+      "HttpHost": "0.0.0.0",
+      "HttpPort": 48132,
+      "WSEnabled": false,
+      "WSHost": "0.0.0.0",
+      "WSPort": 41420,
+      "HttpVirtualHosts": ["govite-chain"],
+      "IPCEnabled": true,
+      "PublicModules": [
+        "ledger",
+        "net",
+        "contract",
+        "util",
+        "debug",
+        "sbpstats",
+        "dashboard",
+        "subscribe"
+      ],
+      "Miner": false,
+      "CoinBase": "",
+      "EntropyStorePath": "",
+      "EntropyStorePassword": "",
+      "LogLevel": "warn",
+      "OpenPlugins": true,
+      "SubscribeEnabled": true,
+      "TxDexEnable": true,
+      "VmLogAll": false,
+      "DashboardTargetURL": "wss://stats.vite.net",
+      "RewardAddr": "vite_xxxxxxxxxxxxxxxxxx"
+    }

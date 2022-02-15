@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/part-of: vitex-k8s
+data:
+  # Change password before deploying
+  POSTGRES_DB: vitexweb
+  POSTGRES_USER: vitexweb
+  POSTGRES_PASSWORD: vitexweb

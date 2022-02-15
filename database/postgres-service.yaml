@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+  selector:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/part-of: vitex-k8s

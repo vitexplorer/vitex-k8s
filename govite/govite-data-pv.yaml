@@ -1,0 +1,17 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: govite-data-pv
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: govite
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 350Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+    path: "/var/pv-gvite-data"

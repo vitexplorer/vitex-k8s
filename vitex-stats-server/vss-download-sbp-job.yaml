@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: download-sbp
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: download-sbp
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  backoffLimit: 5
+  activeDeadlineSeconds: 100
+  template:
+    spec:
+      containers:
+        - name: download-sbp
+          image: yourdockerrepo/vitex-stats-server:1.2
+          command: ["flask", "manage", "download-sbp"]
+          env:
+            - name: FLASK_CONFIG
+              value: /etc/vitex-stats-server/flask_config.py
+            - name: FLASK_ENV
+              value: production
+          volumeMounts:
+            - mountPath: /etc/vitex-stats-server
+              name: flask-config
+              readOnly: true
+      volumes:
+        - name: flask-config
+          configMap:
+            name: vitex-stats-server
+      restartPolicy: Never
