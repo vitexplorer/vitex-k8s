@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-sbp-rewards
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: update-sbp-rewards
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  # at 20h00 of every day
+  schedule: "0 20 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: update-sbp-rewards
+              image: yourdockerrepo/vitex-stats-server:1.12
+              command: ["flask", "manage", "update-sbp-reward-yesterday"]
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: FLASK_CONFIG
+                  value: /etc/vitex-stats-server/flask_config.py
+                - name: FLASK_ENV
+                  value: production
+              volumeMounts:
+                - mountPath: /etc/vitex-stats-server
+                  name: flask-config
+                  readOnly: true
+          volumes:
+            - name: flask-config
+              configMap:
+                name: vitex-stats-server
+
+          restartPolicy: OnFailure
