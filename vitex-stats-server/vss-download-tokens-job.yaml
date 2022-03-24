@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: download-tokens
-          image: yourdockerrepo/vitex-stats-server:1.2
+          image: yourdockerrepo/vitex-stats-server:1.12
           command: ["flask", "manage", "download-tokens"]
           env:
             - name: FLASK_CONFIG

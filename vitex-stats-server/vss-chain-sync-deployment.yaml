@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: chain-sync
-          image: yourdockerrepo/vitex-stats-server:1.2
+          image: yourdockerrepo/vitex-stats-server:1.12
           imagePullPolicy: "IfNotPresent"
           args: ["flask", "manage", "launch-sync"]
           env:

@@ -15,7 +15,7 @@ spec:
         spec:
           containers:
             - name: update-daily-stats
-              image: yourdockerrepo/vitex-stats-server:1.2
+              image: yourdockerrepo/vitex-stats-server:1.12
               command: ["flask", "manage", "update-daily-statistics-today"]
               imagePullPolicy: IfNotPresent
               env:

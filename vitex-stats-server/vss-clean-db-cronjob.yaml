@@ -15,7 +15,7 @@ spec:
         spec:
           containers:
             - name: clean-db
-              image: yourdockerrepo/vitex-stats-server:1.2
+              image: yourdockerrepo/vitex-stats-server:1.12
               command: ["flask", "manage", "clean-db-days-before", "360"]
               imagePullPolicy: IfNotPresent
               env:

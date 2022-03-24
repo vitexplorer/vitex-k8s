@@ -15,7 +15,7 @@ spec:
         spec:
           containers:
             - name: download-sbp
-              image: yourdockerrepo/vitex-stats-server:1.2
+              image: yourdockerrepo/vitex-stats-server:1.12
               command: ["flask", "manage", "download-sbp"]
               imagePullPolicy: IfNotPresent
               env:

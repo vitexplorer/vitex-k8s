@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: create-tables
-          image: yourdockerrepo/vitex-stats-server:1.2
+          image: yourdockerrepo/vitex-stats-server:1.12
           command: ["flask", "manage", "create-tables"]
           env:
             - name: FLASK_CONFIG

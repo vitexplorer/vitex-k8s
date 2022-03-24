@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: website-backend
-          image: yourdockerrepo/vitex-stats-server:1.2
+          image: yourdockerrepo/vitex-stats-server:1.12
           imagePullPolicy: "IfNotPresent"
           env:
             - name: FLASK_CONFIG
