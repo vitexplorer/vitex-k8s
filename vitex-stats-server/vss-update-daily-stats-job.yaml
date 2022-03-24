@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: update-daily-statistics-20220216
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: update-daily-statistics
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  backoffLimit: 5-
+  activeDeadlineSeconds: 86400
+  template:
+    spec:
+      containers:
+        - name: update-daily-statistics
+          image: yourdockerrepo/vitex-stats-server:1.12
+          command: ["flask", "manage", "update-daily-statistics", "2022-02-16"]
+          env:
+            - name: FLASK_CONFIG
+              value: /etc/vitex-stats-server/flask_config.py
+            - name: FLASK_ENV
+              value: production
+          volumeMounts:
+            - mountPath: /etc/vitex-stats-server
+              name: flask-config
+              readOnly: true
+      volumes:
+        - name: flask-config
+          configMap:
+            name: vitex-stats-server
+      restartPolicy: Never
