@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-index-snapshotblock-timestamp
+  namespace: vitex-k8s
+  labels:
+    app.kubernetes.io/name: create-index-snapshotblock-timestamp
+    app.kubernetes.io/part-of: vitex-k8s
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 100
+  template:
+    spec:
+      containers:
+        - name: create-index-snapshotblock-timestamp
+          image: yourdockerrepo/vitex-stats-server:1.12
+          command: ["flask", "manage", "create-index-snapshot-timestamp"]
+          env:
+            - name: FLASK_CONFIG
+              value: /etc/vitex-stats-server/flask_config.py
+            - name: FLASK_ENV
+              value: production
+          volumeMounts:
+            - mountPath: /etc/vitex-stats-server
+              name: flask-config
+              readOnly: true
+      volumes:
+        - name: flask-config
+          configMap:
+            name: vitex-stats-server
+
+      restartPolicy: Never
